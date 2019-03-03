@@ -1,4 +1,4 @@
-package mapper;
+package com.taotao.mapper;
 
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemExample;

@@ -64,11 +64,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public TaotaoResult createItem(TbItem tbItem) {
+
+        Date date = new Date();
         //生成商品id
         tbItem.setId(IDUtils.genItemId());
         tbItem.setStatus((byte) 1);
-        tbItem.setCreated(new Date());
-        tbItem.setUpdated(new Date());
+        tbItem.setCreated(date);
+        tbItem.setUpdated(date);
 
         itemMapper.insert(tbItem);
 

@@ -5,7 +5,9 @@ import com.github.pagehelper.PageInfo;
 import com.taotao.commom.utils.IDUtils;
 import com.taotao.commom.utils.TaotaoResult;
 import com.taotao.common.pojo.EUDateGridResult;
+import com.taotao.mapper.TbItemDescMapper;
 import com.taotao.pojo.TbItem;
+import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
 import com.taotao.service.ItemService;
 import com.taotao.mapper.TbItemMapper;
@@ -20,6 +22,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapper itemMapper;
+
+    @Autowired
+    private TbItemDescMapper tbItemDescMapper;
 
     @Override
     public TbItem getItemById(long itemId) {
@@ -63,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public TaotaoResult createItem(TbItem tbItem) {
+    public TaotaoResult createItem(TbItem tbItem, String desc) throws Exception {
 
         Date date = new Date();
         //生成商品id
@@ -73,6 +78,27 @@ public class ItemServiceImpl implements ItemService {
         tbItem.setUpdated(date);
 
         itemMapper.insert(tbItem);
+
+        //添加商品描述信息
+        TaotaoResult result = insertItemDesc(tbItem.getId(), desc);
+
+        if (result.getStatus() != 200){
+            //抛出异常，回归事务， 不能使用try catch进行捕获， 如果进行捕获， 则不会进行回滚
+            throw new Exception();
+        }
+        return TaotaoResult.ok();
+    }
+
+    private TaotaoResult insertItemDesc(Long itemId, String desc){
+        TbItemDesc tbItemDesc = new TbItemDesc();
+        Date date = new Date();
+
+        tbItemDesc.setItemDesc(desc);
+        tbItemDesc.setCreated(date);
+        tbItemDesc.setUpdated(date);
+        tbItemDesc.setItemId(itemId);
+
+        tbItemDescMapper.insert(tbItemDesc);
 
         return TaotaoResult.ok();
     }

@@ -1,6 +1,5 @@
 package com.taotao.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.taotao.commom.utils.JsonUtils;
 import com.taotao.service.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;

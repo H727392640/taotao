@@ -18,7 +18,7 @@ public class PageController {
      * 打开首页
      * @return
      */
-    @RequestMapping({"/", "/index"})
+    @RequestMapping("/")
     public String showIndexPage(){
         return "index";
     }

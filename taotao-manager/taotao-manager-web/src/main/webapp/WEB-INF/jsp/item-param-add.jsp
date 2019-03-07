@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <table cellpadding="5" style="margin-left: 30px" id="itemParamAddTable" class="itemParam">
 	<tr>
 		<td>商品类目:</td>
 		<td><a href="javascript:void(0)" class="easyui-linkbutton selectItemCat">选择类目</a> 
-			<input type="hidden" name="cid" style="width: 280px;"></input>
+			<input type="hidden" name="cid" style="width: 280px;"/>
 		</td>
 	</tr>
 	<tr class="hide addGroupTr">
@@ -35,43 +35,44 @@
 		</ul>
 	</li>
 </div>
-<script style="text/javascript">
+
+<script type="text/javascript">
 	$(function(){
 		TAOTAO.initItemCat({
 			fun:function(node){
-			$(".addGroupTr").hide().find(".param").remove();
+				$(".addGroupTr").hide().find(".param").remove();
 				//  判断选择的类目是否已经添加过规格
-			  $.getJSON("/item/param/query/itemcatid/" + node.id,function(data){
-				  if(data.status == 200 && data.data){
-					  $.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
-						 $("#itemParamAddTable .selectItemCat").click();
-					  });
-					  return ;
-				  }
-				  $(".addGroupTr").show();
-			  });
+				$.getJSON("/item/param/query/itemcatid/" + node.id,function(data){
+					if(data.status == 200 && data.data){
+						$.messager.alert("提示", "该类目已经添加，请选择其他类目。", undefined, function(){
+							$("#itemParamAddTable .selectItemCat").click();
+						});
+						return ;
+					}
+					$(".addGroupTr").show();
+				});
 			}
 		});
-		
+
 		$(".addGroup").click(function(){
-			  var temple = $(".itemParamAddTemplate li").eq(0).clone();
-			  $(this).parent().parent().append(temple);
-			  temple.find(".addParam").click(function(){
-				  var li = $(".itemParamAddTemplate li").eq(2).clone();
-				  li.find(".delParam").click(function(){
-					  $(this).parent().remove();
-				  });
-				  li.appendTo($(this).parentsUntil("ul").parent());
-			  });
-			  temple.find(".delParam").click(function(){
-				  $(this).parent().remove();
-			  });
-		 });
-		
+			var temple = $(".itemParamAddTemplate li").eq(0).clone();
+			$(this).parent().parent().append(temple);
+			temple.find(".addParam").click(function(){
+				var li = $(".itemParamAddTemplate li").eq(2).clone();
+				li.find(".delParam").click(function(){
+					$(this).parent().remove();
+				});
+				li.appendTo($(this).parentsUntil("ul").parent());
+			});
+			temple.find(".delParam").click(function(){
+				$(this).parent().remove();
+			});
+		});
+
 		$("#itemParamAddTable .close").click(function(){
 			$(".panel-tool-close").click();
 		});
-		
+
 		$("#itemParamAddTable .submit").click(function(){
 			var params = [];
 			var groups = $("#itemParamAddTable [name=group]");
@@ -81,7 +82,7 @@
 				p.each(function(_i,_e){
 					var _val = $(_e).siblings("input").val();
 					if($.trim(_val).length>0){
-						_ps.push(_val);						
+						_ps.push(_val);
 					}
 				});
 				var _val = $(e).siblings("input").val();
@@ -89,7 +90,7 @@
 					params.push({
 						"group":_val,
 						"params":_ps
-					});					
+					});
 				}
 			});
 			var url = "/item/param/save/"+$("#itemParamAddTable [name=cid]").val();
@@ -97,10 +98,11 @@
 				if(data.status == 200){
 					$.messager.alert('提示','新增商品规格成功!',undefined,function(){
 						$(".panel-tool-close").click();
-    					$("#itemParamList").datagrid("reload");
-    				});
+						$("#itemParamList").datagrid("reload");
+					});
 				}
 			});
 		});
 	});
+
 </script>

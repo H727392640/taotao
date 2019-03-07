@@ -6,9 +6,11 @@ import com.taotao.commom.utils.IDUtils;
 import com.taotao.commom.utils.TaotaoResult;
 import com.taotao.common.pojo.EUDateGridResult;
 import com.taotao.mapper.TbItemDescMapper;
+import com.taotao.mapper.TbItemParamItemMapper;
 import com.taotao.pojo.TbItem;
 import com.taotao.pojo.TbItemDesc;
 import com.taotao.pojo.TbItemExample;
+import com.taotao.pojo.TbItemParamItem;
 import com.taotao.service.ItemService;
 import com.taotao.mapper.TbItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemDescMapper tbItemDescMapper;
+
+    @Autowired
+    private TbItemParamItemMapper tbItemParamItemMapper;
 
     @Override
     public TbItem getItemById(long itemId) {
@@ -55,7 +60,6 @@ public class ItemServiceImpl implements ItemService {
         TbItemExample example = new TbItemExample();
         PageHelper.startPage(page, rows);
 
-
         List<TbItem> list = itemMapper.selectByExample(example);
 
         EUDateGridResult result = new EUDateGridResult();
@@ -68,7 +72,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public TaotaoResult createItem(TbItem tbItem, String desc) throws Exception {
+    public TaotaoResult createItem(TbItem tbItem, String desc, String itemParams) throws Exception {
 
         Date date = new Date();
         //生成商品id
@@ -81,15 +85,35 @@ public class ItemServiceImpl implements ItemService {
 
         //添加商品描述信息
         TaotaoResult result = insertItemDesc(tbItem.getId(), desc);
-
         if (result.getStatus() != 200){
             //抛出异常，回归事务， 不能使用try catch进行捕获， 如果进行捕获， 则不会进行回滚
             throw new Exception();
         }
+
+        //添加规格参数
+        result = insertItemParam(tbItem.getId(), itemParams);
+        if (result.getStatus() != 200){
+            //抛出异常，回归事务， 不能使用try catch进行捕获， 如果进行捕获， 则不会进行回滚
+            throw new Exception();
+        }
+
         return TaotaoResult.ok();
     }
 
-    private TaotaoResult insertItemDesc(Long itemId, String desc){
+    private TaotaoResult insertItemParam(long itemId, String itemParam){
+        TbItemParamItem tbItemParamItem = new TbItemParamItem();
+        Date date = new Date();
+        tbItemParamItem.setItemId(itemId);
+        tbItemParamItem.setParamData(itemParam);
+        tbItemParamItem.setCreated(date);
+        tbItemParamItem.setUpdated(date);
+
+        tbItemParamItemMapper.insert(tbItemParamItem);
+
+        return TaotaoResult.ok();
+    }
+
+    private TaotaoResult insertItemDesc(long itemId, String desc){
         TbItemDesc tbItemDesc = new TbItemDesc();
         Date date = new Date();
 

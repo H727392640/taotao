@@ -9,6 +9,6 @@ public interface ItemService {
 
     EUDateGridResult getItemList(int page, int rows);
 
-    TaotaoResult createItem(TbItem tbItem, String desc) throws Exception;
+    TaotaoResult createItem(TbItem tbItem, String desc, String itemParams) throws Exception;
 
 }

@@ -68,4 +68,42 @@ public class ContentServiceImpl implements ContentService {
 
         return TaotaoResult.ok();
     }
+
+    @Override
+    public TaotaoResult editContent(TbContent content) {
+        Date date = new Date();
+
+        content.setUpdated(date);
+
+        tbContentMapper.updateByPrimaryKeySelective(content);
+
+        try {
+            HttpClientUtil.doGet(REST_BASE_URL + REST_CONTENT_SYNC_URL + content.getCategoryId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return TaotaoResult.ok();
+    }
+
+    @Override
+    public TaotaoResult deleteContent(Long[] ids) {
+        TbContentExample example = new TbContentExample();
+        TbContentExample.Criteria criteria = example.createCriteria();
+        criteria.andIdEqualTo(ids[0]);
+
+        List<TbContent> list = tbContentMapper.selectByExample(example);
+
+        for (Long id : ids){
+            tbContentMapper.deleteByPrimaryKey(id);
+        }
+
+        try {
+            HttpClientUtil.doGet(REST_BASE_URL + REST_CONTENT_SYNC_URL + list.get(0).getCategoryId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return TaotaoResult.ok();
+    }
 }

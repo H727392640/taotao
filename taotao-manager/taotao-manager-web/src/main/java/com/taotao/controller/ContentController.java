@@ -31,8 +31,22 @@ public class ContentController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public TaotaoResult insertContent(TbContent tbContent){
-        contentService.insertContent(tbContent);
+    public TaotaoResult insertContent(TbContent content){
+        contentService.insertContent(content);
+        return TaotaoResult.ok();
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public TaotaoResult editContent(TbContent content){
+        contentService.editContent(content);
+        return TaotaoResult.ok();
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public TaotaoResult deleteContent(Long[] ids){
+        contentService.deleteContent(ids);
         return TaotaoResult.ok();
     }
 

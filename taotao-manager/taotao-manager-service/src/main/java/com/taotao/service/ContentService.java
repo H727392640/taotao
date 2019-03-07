@@ -15,4 +15,8 @@ public interface ContentService {
     EUDateGridResult getContentList(int page, int rows, Long categoryId );
 
     TaotaoResult insertContent(TbContent content);
+
+    TaotaoResult editContent(TbContent content);
+
+    TaotaoResult deleteContent(Long[] ids);
 }

@@ -1,8 +1,5 @@
 package com.taotao.portal.controller;
 
-import com.sun.java.swing.plaf.motif.MotifEditorPaneUI;
-import com.taotao.commom.utils.ExceptionUtil;
-import com.taotao.commom.utils.TaotaoResult;
 import com.taotao.portal.pojo.CartItem;
 import com.taotao.portal.pojo.Order;
 import com.taotao.portal.service.CartService;
@@ -11,10 +8,8 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

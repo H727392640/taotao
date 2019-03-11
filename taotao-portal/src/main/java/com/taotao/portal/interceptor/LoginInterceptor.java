@@ -29,9 +29,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = CookieUtils.getCookieValue(request, "TT_TOKEN");
         TbUser user = userService.getUserByToken(token);
-        if (user == null){
+        if (user == null) {
             //跳转到登录界面
-            response.sendRedirect(userService.SSO_BASE_URL+userService.SSO_PAGE_LOGIN+"?redirect="+request.getRequestURI());
+            response.sendRedirect(userService.SSO_BASE_URL + userService.SSO_PAGE_LOGIN + "?redirect=" + request.getRequestURL());
             return false;
         }
         return true;

@@ -24,10 +24,10 @@ import java.util.List;
  */
 @Service
 public class CartServiceImpl implements CartService {
-    @Value("REST_BASE_URL")
+    @Value("${REST_BASE_URL}")
     private String REST_BASE_URL;
 
-    @Value("ITEM_INFO_URL")
+    @Value("${ITEM_INFO_URL}")
     private String ITEM_INFO_URL;
 
     @Override
@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
         for (CartItem cItem : itemList) {
             //如果存在商品
             if (cItem.getId() == itemId) {
-                cItem.setNumber(cItem.getNumber() + number);
+                cItem.setNum(cItem.getNum() + number);
                 cartItem = cItem;
                 break;
             }
@@ -55,7 +55,7 @@ public class CartServiceImpl implements CartService {
                 TbItem item = (TbItem) taotaoResult.getData();
                 cartItem.setId(item.getId());
                 cartItem.setTitle(item.getTitle());
-                cartItem.setNumber(number);
+                cartItem.setNum(number);
                 cartItem.setPrice(item.getPrice());
                 cartItem.setImage(item.getImage() == null ? "" : item.getImage().split(",")[0]);
             }
@@ -81,4 +81,23 @@ public class CartServiceImpl implements CartService {
         return new ArrayList<>();
     }
 
+    @Override
+    public List<CartItem> getCartItemList(HttpServletRequest request, HttpServletResponse response) {
+        return getCartItemList(request);
+    }
+
+    @Override
+    public TaotaoResult deleteCartItem(long itemId, HttpServletRequest request, HttpServletResponse response) {
+
+        List<CartItem> itemList = getCartItemList(request);
+        for (CartItem cartItem : itemList){
+            if (cartItem.getId() == itemId){
+                itemList.remove(cartItem);
+                break;
+            }
+        }
+
+        CookieUtils.setCookie(request, response, "TT_CART", JsonUtils.objectToJson(itemList), true);
+        return TaotaoResult.ok();
+    }
 }

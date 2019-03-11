@@ -10,7 +10,7 @@ package com.taotao.portal.pojo;
 public class CartItem {
     private long id;
     private String title;
-    private Integer number;
+    private Integer num;
     private long price;
     private String image;
 
@@ -30,12 +30,12 @@ public class CartItem {
         this.title = title;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getNum() {
+        return num;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setNum(Integer num) {
+        this.num = num;
     }
 
     public long getPrice() {

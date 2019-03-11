@@ -71,5 +71,5 @@
         <!--</constructor-arg>-->
         <!--<constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>-->
     <!--</bean>-->
-    <!--<bean id="jedisClientCluster" class="com.taotao.sso.dao.impl.JedisClientCluster"/>-->
+    <!--<bean id="jedisClientCluster" class="com.taotao.sso.JedisClientCluster"/>-->
 </beans>

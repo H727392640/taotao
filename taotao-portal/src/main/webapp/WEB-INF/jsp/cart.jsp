@@ -54,16 +54,18 @@
     </div>
     <div id="product-list" class="cart-tbody">
         <!-- ************************商品开始********************* -->
-        <c:set var="totalPrice" value="0"></c:set>
+        <c:set var="totalPrice" value="0"/>
+        <c:set var="countOfGoods" value="0"/>
         <c:forEach items="${cartList}" var="cart">
         	<c:set var="totalPrice"  value="${ totalPrice + (cart.price * cart.num)}"/>
+            <c:set var="countOfGoods" value="${countOfGoods+(cart.num)}"/>
 	        <div id="product_11345721" data-bind="rowid:1" class="item item_selected ">
 		        <div class="item_form clearfix">
 		            <div class="cell p-checkbox"><input data-bind="cbid:1" class="checkbox" type="checkbox" name="checkItem" checked="" value="11345721-1"></div>
 		            <div class="cell p-goods">
 		                <div class="p-img">
 		                	<a href="/item/${cart.id }.html" target="_blank">
-		                		<img clstag="clickcart|keycount|xincart|p-imglistcart" src="${cart.images[0]}" alt="${cart.title}" width="52" height="52">
+		                		<img clstag="clickcart|keycount|xincart|p-imglistcart" src="${cart.image}" alt="${cart.title}" width="52" height="52">
 		                	</a>
 		                </div>    
 		                <div class="p-name">
@@ -94,7 +96,7 @@
                 <p><span class="totalSkuPrice">¥<fmt:formatNumber value="${totalPrice / 100}" maxFractionDigits="2" minFractionDigits="2" groupingUsed="true"/></span>总计：</p>
                 <p><span id="totalRePrice">- ¥0.00</span>优惠：</p>
             </div>
-            <div class="amout fr"><span id="selectedCount">1</span> 件商品</div>
+            <div class="amout fr"><span id="selectedCount">${countOfGoods}</span> 件商品</div>
         </div>
         <div class="ui-ceilinglamp-1" style="width: 988px; height: 49px;"><div class="cart-dibu ui-ceilinglamp-current" style="width: 988px; height: 49px;">
           <div class="control fdibu fdibucurrent">

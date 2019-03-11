@@ -253,7 +253,7 @@ Version 1.2.5
  * tabs: Users can define mini tools on tabs.
  * tree: The mouse must move a specified distance to begin drag and drop operation.
  * resizable: Add 'options','enable' and 'disable' methods.
- * numberbox: Allow users to change number format.
+ * numberbox: Allow users to change num format.
  * datagrid: The subgrid is supported now.
  * searchbox: Add 'selectName' method to select searching type name.
 
@@ -429,5 +429,5 @@ Version 1.0.3
 * New Plugins
  * combobox: Combines a textbox with a list of options that users are able to choose from.
  * combotree: Combines combobox with drop-down tree component.
- * numberbox: Make input element can only enter number char.
+ * numberbox: Make input element can only enter num char.
  * dialog: rewrite the dialog plugin, dialog can contains toolbar and buttons.

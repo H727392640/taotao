@@ -1,5 +1,6 @@
 package com.taotao.portal.controller;
 
+import com.taotao.pojo.TbUser;
 import com.taotao.portal.pojo.CartItem;
 import com.taotao.portal.pojo.Order;
 import com.taotao.portal.service.CartService;
@@ -37,8 +38,12 @@ public class OrderController {
     }
 
     @RequestMapping("/create")
-    public String createOrder(Order order, Model model) {
+    public String createOrder(Order order, Model model, HttpServletRequest request) {
         try{
+            //补全用户信息,在拦截器中写入了user
+            TbUser user = (TbUser) request.getAttribute("user");
+            order.setUserId(user.getId());
+            order.setBuyerNick(user.getUsername());
             String orderId = orderService.createOrder(order);
             model.addAttribute("orderId", orderId);
             model.addAttribute("payment", order.getPayment());
